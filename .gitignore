@@ -1,0 +1,9 @@
+*.pyc
+__pycache__
+.vscode
+ItemCreate.docx
+~$emCreate.docx
+.DS_Store
+apps/.DS_Store
+db.sqlite3.zip
+db.sqlite3 2.zip

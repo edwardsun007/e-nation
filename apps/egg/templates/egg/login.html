@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login or Register</title>
+    {% load static %}
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+            body{
+                background-image:url(../../static/circuit.jpg);
+                background-repeat:no-repeat;
+                background-size:cover;
+                background-attachment:fixed;
+        }
+        #login_header{
+            position:relative;
+            background-color:#20304D;
+            height:80px;
+            margin:0;
+        }
+        #login_header div{
+            line-height:75px;
+        }
+        #login_header > div > h1 {
+            color: #FBD32C;
+            margin-top:10px
+        }
+        #login_header > div > a{
+            color: #FBD32C;
+        }
+        #login_header > div > div > h3 {
+            color: #FBD32C;
+        }
+        #logo{
+            background-image:url(../../static/img/logo_2.png);
+            display:block;
+            /*background-size:50px;*/
+            background-repeat:no-repeat;
+            position:relative;
+        }
+        .img_head{
+            padding-bottom:10px;
+            margin-left:22px;
+        }
+        #main{
+            background-color:#C4CCCC;
+            padding: 15px;
+        }
+        footer{
+            background-color: #20304D;
+            margin: 0;
+            width: 1110px;
+            position: relative;
+            
+        }
+        .col-md-3{
+            margin:auto;
+        }
+        footer > .container-fluid > .row > .col-md-3 > ul > li > a{
+            color:white;
+        }
+        footer > .container-fluid > .row > .col-md-3 > h5{
+            color:white;
+        }
+        .footer-copyright,.footer-copyright>a{
+            color: #FBD32C;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <div class="container">
+        <header id="login_header">
+                        <div class="row head_div">
+                            <a id="logo" class="col-2 img_head" href="/register/"><img class="col-12" src="" alt=""></a>
+                            <h1 class="col-4">E-Nation</h1>
+                            <div class="text-left ml-3 mt-3 mb-0">
+                                <h3 class="mb-0">Please Login or Register</h3>
+                            </div>
+                        </div>
+        </header>
+        <main role="main" id="main">
+                        <div class="col-12 row ml-2">
+                            <form action="/register/" method="post" class="col-6">
+                                    {% csrf_token %}
+                                    <div class="col-12">
+                                            {% if messages %}
+                                            {% for message in messages %}
+                                               {% if 'register' in message.tags %}
+                                               <p class="{{message.tags}}" style="color: red;">{{message}}</p>
+                                               {% endif %}
+                                            {% endfor %}
+                                            {% endif %}
+                                            <h3>Register here!</h3>
+                                            <p>First Name:</p>
+                                            
+                                            <input class="col-8" type="text" name="first_name">
+                                            <p>Last Name:</p>
+                                            
+                                            <input class="col-8" type="text" name="last_name">
+                                            <p>Email:</p>
+                                            
+                                            
+                                            <input class="col-8" type="email" name="email">
+                                            <p>Password:</p>
+                                            
+                                            <input class="col-8" type="password" name="password">
+                                            <p>Confirm Password:</p>
+                                            
+                                            <input class="col-8" type="password" name="passconf">
+                                            <div class="col-12 mt-3 mb-3 text-center">
+                                                <input type="submit" class="button col-3" name="submit" value="Register!">
+                                            </div>
+                                    </div>
+                            </form>
+                                    <div class="col-6">
+                                        <form action="/login/" method="post" class="col-12">
+                                            {% if messages %}
+                                            {% for message in messages %}
+                                               {% if 'login' in message.tags %}
+                                               <p class="{{message.tags}}" style="color: red;">{{message}}</p>
+                                               {% endif %}
+                                            {% endfor %}
+                                            {% endif %}
+                                            {% csrf_token %}
+                                            <h3>Login here!</h3>
+                                            <p>Email:</p>
+                                            <input class="col-8" type="email" name="login_email">
+                                            <p>Password:</p>
+                                            
+                                            <input class="col-8" type="password" name="login_password">
+                                            <div class="col-12 mt-3 mb-3 text-center">
+                                                <input type="submit" class="button col-3" name="submit" value="Login!">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+            </main>
+            <footer class="page-footer font-small pt-4">
+                    <div class="container-fluid text-center text-md-left">
+                        <!-- Grid row -->
+                            <div class="row">
+                                <hr class="clearfix w-100 d-md-none pb-3">
+                                <!-- Grid column -->
+                                <div class="col-md-3 mb-md-0 mr-3 mb-3">
+                                                <!-- Links -->
+                                                <h5 class="text-uppercase">Get to know us</h5>
+                                                <ul class="list-unstyled">
+                                                    <li>
+                                                        <a href="#!">Careers</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">Blog</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">About E-Nation</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">Investor Relation</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-3 mb-md-0 mr-3 mb-3">
+                                                    <!-- Links -->
+                                                    <h5 class="text-uppercase">Make Money With Us</h5>
+                                                    <ul class="list-unstyled">
+                                                        <li>
+                                                            <a href="#!">Sell on E-Nation.com</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#!">Become An Affiliate</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#!">Advertise Your Products</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#!">Investor Relation</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            <!-- Grid column -->
+                                            <div class="col-md-3 mb-md-0 mb-3">
+                                                <!-- Links -->
+                                                <h5 class="text-uppercase">How Can We Assist You</h5>
+                                                <ul class="list-unstyled">
+                                                    <li>
+                                                        <a href="#!">Shipping Rates &amp; Policies</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">Returns &amp; Replacements</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">E-Nation Assistant</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#!">Contact Us</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="footer-copyright text-center py-3">© 2017 Copyright:
+                                                <a href="#"> E-Nation.com</a>
+                                </div>
+                    </footer>
+            </div>
+    </body>
+</html>

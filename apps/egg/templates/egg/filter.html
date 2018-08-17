@@ -1,0 +1,30 @@
+<div class='ajax-container'>
+       <h3>Search result based on your choice:</h3>
+        {% for i in item %}
+        <div class="ajax_product ajax_product_single">
+                <div class="ajax-thumb">
+                    <img src="{{i.picture}}" alt="not_found.jpg">
+                </div>
+                <div class="ajax-body">
+                    <h3 class="ajax-product-price">${{i.price}}</h3>
+                    <div class="ajax-product-rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-o empty"></i>
+                    </div>
+                    <h2 class="ajax-product-name"><a href='item/{{i.id}}/'>{{i.name}}</a></h2>
+                    <div class="ajax-product-btns">
+                        <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+                        <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                        <form action = '/additem/' method='POST'>
+                            {% csrf_token %}
+                            <input type='hidden' name = 'item_id' value={{i.id}}>
+                            <button type="submit" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i>Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+        </div>
+        {% endfor %}
+</div>

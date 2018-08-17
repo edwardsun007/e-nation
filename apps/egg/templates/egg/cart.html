@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>cart</title>
+    <!-- {% load static %}
+    <link rel='stylesheet' type='text/css' href='{% static "handyhelper/css.css" %}'> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body{
+                background-image:url(../../static/circuit.jpg);
+                background-repeat:no-repeat;
+                background-size:cover;
+        }
+        #login_header{
+                background-color:#20304D;
+                height:75px;
+        }
+        #login_header div{
+                line-height:75px;
+        }
+        #login_header > div > h1 {
+            color: #FBD32C;
+            margin-top: 10px;
+        }
+        #login_header > div > h3 {
+            color: #FBD32C;
+            margin-top: 16px;
+        }
+        #login_header > div > a{
+            color: #FBD32C;
+        }
+        #main{
+            background-color:#C4CCCC;
+            padding:15px;
+        }
+        #main > h3{
+            margin-bottom: 2%;
+        }
+        img{
+            max-width:100%;
+            max-height:100px;
+        }
+        a{
+            color:black;
+        }
+        .sidebar{
+            background-color:#B23850;
+            color:white;
+        }
+        p{
+            font-size:1em;
+        }
+        #login_header div{
+            line-height:75px;
+        }
+        h1{
+            margin-top:10px;
+        }
+        #logo{
+            background-image:url(../../static/oldegglogo.png);
+            display:block;
+            background-size:50px;
+            background-repeat:no-repeat;
+            margin:0 0 0 10px;
+        }
+        .img_head{
+            padding-bottom:10px;
+        }
+        .item_image{
+            width: 30%;
+            height:30%;
+        }
+        .total_num{
+            color:#b12704;
+        }
+        .purchase_btn{
+            background-color: #f0c14b;
+            width: 200px;
+        }
+        .item-price{
+            color:#b12704;
+            font-weight: bold;
+        }
+        footer{
+            background-color: #20304D;
+            margin: 0;
+            width: 1108px;
+            position: relative;
+            
+        }
+        .col-md-3{
+            margin:auto;
+        }
+        footer > .container-fluid > .row > .col-md-3 > ul > li > a{
+            color:white;
+        }
+        footer > .container-fluid > .row > .col-md-3 > h5{
+            color:white;
+        }
+        .footer-copyright,.footer-copyright>a{
+            color: #FBD32C;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <div class="container">
+        <header id='login_header'>
+            <div class='row col-12'>
+                {% if request.session.id != None %}
+                <a id='logo' class='col-1 img_head' href="/register/"><img class='col-12' src='' alt=''></a>
+                <h1 class='col-4'>OldEgg Studios</h1>
+                <a class='col-3' href='/orderhistory'><p class='col-12'>Welcome {{request.session.first_name}} {{request.session.last_name}}</p></a>
+                <a class='col-2' href='/clear/' style="text-decoration:none;"><img src="../../static/logout.png" style="width:40px;height:40px;" alt="notfound.png">Logout</a>
+                {% else %}
+                <a id='logo' class='col-1' href="/register/"><img class='col-12' src='' alt=''></a>
+                <h1 class='col-4'>OldEgg Studios</h1>
+                <h3 class='col-3'>Shopping Cart</h3>
+                <a class='col-3' href='/loginorregister/'>Register/Login</a>
+                {% endif %}
+            </div>
+        </header>
+        <main id='main' role='main'>
+            <div class="row col-12"></div>
+            <form action="/purchase/" method='POST'>
+                {% csrf_token %}
+                {% if 'id' in request.session %}
+                    {% for c in cart %}
+                    <div class="mb-3 row col-12">
+                        <img class="col-2 item_image" src="{{ c.item.picture }}" alt="not_found.png">
+                        <p class="col-3">{{ c.item.name }}</p>
+                        <p class="col-2 item-price">$ {{ c.item.price }}</p>
+                        <div class="form-group">
+                                <label for="sel1">Quantity:</label>
+                                <select class="form-control" name="{{c.item.name}}">
+                                    {% if c.quantity == 1%}
+                                    <option selected value="1">1</option>
+                                    {% else %}
+                                    <option value="1">1</option>
+                                    {% endif %}
+                                    {% if c.quantity == 2%}
+                                    <option selected value="2">2</option>
+                                    {% else %}
+                                    <option value="2">2</option>
+                                    {% endif %}
+                                    {% if c.quantity == 3%}
+                                    <option selected value="3">3</option>
+                                    {% else %}
+                                    <option value="3">3</option>
+                                    {% endif %}
+                                    {% if c.quantity == 4%}
+                                    <option selected value="4">4</option>
+                                    {% else %}
+                                    <option value="4">4</option>
+                                    {% endif %}
+                                </select>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    {% for c in cart %}
+                    <div class="mb-3 row col-12">
+                        <img class="col-2 ml-2 item_image" src="{{ c.picture }}" alt="not_found.png">
+                        <p class="col-3 ml-2">{{ c.name }}</p>
+                        <p class="col-2 ml-2 item-price">$ {{ c.price }}</p>
+                        <div class="form-group">
+                                <label for="sel1">Quantity:</label>
+                                <select class="form-control" name="{{c.name}}">
+                                    {% for key,value in quant.items %}
+                                        {% if key == c.id %}
+                                            {% if value == 1 %}
+                                            <option selected value="1">1</option>
+                                            {% else %}
+                                            <option value="1">1</option>
+                                            {% endif %}
+                                            {% if value == 2%}
+                                            <option selected value="2">2</option>
+                                            {% else %}
+                                            <option value="2">2</option>
+                                            {% endif %}
+                                            {% if value == 3%}
+                                            <option selected value="3">3</option>
+                                            {% else %}
+                                            <option value="3">3</option>
+                                            {% endif %}
+                                            {% if value == 4%}
+                                            <option selected value="4">4</option>
+                                            {% else %}
+                                            <option value="4">4</option>
+                                            {% endif %}
+                                        {% else %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                {% if total != 0 %}
+                <h3 class='col-10 text-right total_num'>
+                    Order Total: $ {{total}}  
+                </h3>
+                <div class="col-10 text-right"><button type="submit" class="btn purchase_btn">Check Out</button></div>
+                {% else %}
+                <h3 class='col-10 text-right total_num'>
+                    Order total: $ {{total}}  
+                </h3>
+                {% endif %}
+            </form>
+        </main>
+        <footer class="page-footer font-small pt-4">
+                <div class="container-fluid text-center text-md-left">
+                <!-- Grid row -->
+                    <div class="row">
+                        <hr class="clearfix w-100 d-md-none pb-3">
+                        <!-- Grid column -->
+                        <div class="col-md-3 mb-md-0 mr-3 mb-3">
+                            <!-- Links -->
+                            <h5 class="text-uppercase">Get to know us</h5>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="#!">Careers</a>
+                                </li>
+                                <li>
+                                    <a href="#!">Blog</a>
+                                </li>
+                                <li>
+                                    <a href="#!">About OldEggs</a>
+                                </li>
+                                <li>
+                                    <a href="#!">Investor Relation</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3 mb-md-0 mr-3 mb-3">
+                                <!-- Links -->
+                                <h5 class="text-uppercase">Make Money With Us</h5>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <a href="#!">Sell on OldEggs.com</a>
+                                    </li>
+                                    <li>
+                                        <a href="#!">Become An Affiliate</a>
+                                    </li>
+                                    <li>
+                                        <a href="#!">Advertise Your Products</a>
+                                    </li>
+                                    <li>
+                                        <a href="#!">Investor Relation</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        <!-- Grid column -->
+                        <div class="col-md-3 mb-md-0 mb-3">
+                            <!-- Links -->
+                            <h5 class="text-uppercase">How Can We Assist You</h5>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="#!">Shipping Rates & Policies</a>
+                                </li>
+                                <li>
+                                    <a href="#!">Returns & Replacements</a>
+                                </li>
+                                <li>
+                                    <a href="#!">OldEggs Assistant</a>
+                                </li>
+                                <li>
+                                    <a href="#!">Contact Us</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                        <div class="footer-copyright text-center py-3">© 2018 Copyright:
+                            <a href="#"> OldEggs.com</a>
+                        </div>
+            </footer>
+    </div>

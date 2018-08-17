@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <style>
+        body{
+            background-image:url(../../static/circuit.jpg);
+            background-repeat:no-repeat;
+            background-size:cover;
+        }
+        #login_header{
+            background-color:#20304D;
+            height:75px;
+        }
+        #login_header div{
+            line-height:75px;
+        }
+        #login_header > div > h1 {
+            color: #FBD32C;
+            margin-top: 10px;
+        }
+        #login_header > div > a{
+            color: #FBD32C;
+        }
+        #img_head{
+            width:auto;
+            height:50px;
+            margin-top:25px;
+        }
+        .description{
+            width: 40%;
+            display: inline-block;
+            margin-top:1%;
+            
+        }
+        .middle > img{
+            width: 40%;
+            height: 40%;
+            display: inline-block;
+        }
+        .middle > ul{
+            vertical-align: top;
+        }
+        .middle > ul,li{
+            width: 46%;
+        }
+        .options{
+            width: 40%;
+            max-height: 100%;
+            display: inline-block;
+            vertical-align: top;
+            margin-top:1%;
+            margin-left:1%;
+            border:1px solid grey;
+            padding: 3%;
+        }
+        .fa-star{
+            color:orange;
+        }
+        .fa-star-half-alt{
+            color:orange;
+        }
+        .reviews > p{
+            display: inline-block;
+        }
+        .item-img{
+            width: 25px;
+            height: 25px;
+        }
+        .price{
+            color: gold;
+        }
+        .green{
+            color:green;
+        }
+        .similarbox {
+            width: 25%;
+            display: inline-block;
+        }
+        .similarbox > img{
+            width: 27%;
+            height: 27%;
+        }
+        .wrapper{
+            padding-top: 2%;
+            padding-bottom: 2%;
+            padding-left: 4%;
+            padding-right: 3%;
+            background-color:#C4CCCC;
+        }
+        #logo{
+            background-image:url(../../static/oldegglogo.png);
+            display:block;
+            background-size:50px;
+            background-repeat:no-repeat;
+            margin:0 0 0 10px;
+        }
+        .img_head{
+            padding-bottom:10px;
+        }
+        a{
+            color:black;
+        }
+        footer{
+            background-color: #20304D;
+            margin: 0;
+            width: 1108px;
+            position: relative;
+            
+        }
+        .col-md-3,.col-md-4,.col-md-5,.col-md-4 > ul > li > a,.col-md-5> ul > li > a{
+            color:white;
+        }
+        footer > .container-fluid > .row > .col-md-3 > ul > li > a{
+            color:white;
+        }
+        footer > .container-fluid > .row > .col-md-3 > h5{
+            color:white;
+        }
+        .footer-copyright,.footer-copyright>a{
+            color: #FBD32C;
+        }
+    </style>
+</head>
+    <body>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        
+        <div class="container">
+            <header id='login_header'>
+                <div class='row col-12'>
+                    {% if request.session.id != None %}
+                    <a id='logo' class='col-1 img_head' href="/register/"><img class='col-12' src='' alt=''></a>
+                    <h1 class='col-4'>OldEgg Studios</h1>
+                    <a class='col-2' href='/orderhistory/'><p class='col-12'>Welcome {{request.session.first_name}}</p></a>
+                    <a class='col-2'href="/cart" style="text-decoration:none;"><img src="../../static/shoppingcart.png" style="width:40px;height:40px;"alt="notfound">&nbsp;Cart ( <span id="num_item">{{cart.quantity}}</span> )</a>
+                    <a class='col-2' href='/clear/' style="text-decoration:none;"><img src="../../static/logout.png" style="width:40px;height:40px;" alt="notfound.png">Logout</a>
+                    {% else %}
+                    <a id='logo' class='col-1 img_head' href="/register/"><img class='col-12' src='' alt=''></a>
+                    <h1 class='col-4'>OldEgg Studios</h1>
+                    <a class='col-3' href='/loginorregister/'>Register/Login</a>
+                    <a class='col-2'href="/cart" style="text-decoration:none;"><img src="../../static/shoppingcart.png" style="width:40px;height:40px;"alt="notfound">&nbsp;Cart ( <span id="num_item">{{cart.quantity}}</span> )</a>
+                    {% endif %}
+                </div>
+            </header>
+            <div class="wrapper">
+                    <h4>{{item.name}}</h4>
+                <div class="description">
+                    
+                    <div class="reviews">
+                        <p>rating: </p>
+                        {% for x in stars %}
+                        <i class="fas fa-star"></i>
+                        {% endfor %}
+                        {% for y in halfstar  %}
+                        <i class="fas fa-star-half-alt"></i>
+                        {% endfor %}
+                    </div>
+    
+                    <div class="middle col-12 row">
+                        <img class="item-img" src="{{item.picture}}" alt="not_found.png">
+                    </div>
+                </div>
+                <div class="options">
+                    <p>FREE Shipping on orders over $25—or get FREE Two-Day Shipping with OldEgg Premium</p>
+                    <p><span class="green">In Stock</span>  </p>
+                    <p class="price">${{item.price}}</p>
+                    <form action="/additem/" method='POST'>
+                        {% csrf_token %}
+                        <input type='hidden' name = 'item_id' value={{item.id}}>
+                        <button type="submit" class="btn btn-primary">ADD TO CART</button>
+                    </form>
+                    
+                </div>
+                <div class="about">
+                    <h3>About this product</h3>
+                    <p>{{item.description}}</p>
+                </div>
+                <div class="similar">
+                    <h3>Similar Stuff</h3>
+                    {% for i in similars  %}
+                    <div class="similarbox">
+                            <img src="{{i.picture}}" alt="not_found.png">
+                            <p>{{i.name}}</p>
+                            <form action="/additem/" method='POST'>
+                                {% csrf_token %}
+                                <input type='hidden' name = 'item_id' value={{i.id}}>
+                                <button type="submit" class="btn btn-primary">ADD TO CART</button>
+                            </form>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <footer class="page-footer font-small pt-4">
+                    <div class="container-fluid text-center text-md-left">
+                    <!-- Grid row -->
+                        <div class="row">
+                            <hr class="clearfix w-100 d-md-none pb-3">
+                            <!-- Grid column -->
+                            <div class="col-md-3 mb-md-0 mb-3">
+                                <!-- Links -->
+                                <h5 class="text-uppercase">Get to know us</h5>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <a href="#!">Careers</a>
+                                    </li>
+                                    <li>
+                                        <a href="#!">Blog</a>
+                                    </li>
+                                    <li>
+                                        <a href="#!">About OldEggs</a>
+                                    </li>
+                                    <li>
+                                        <a href="#!">Investor Relation</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4 mb-md-0 mb-3">
+                                    <!-- Links -->
+                                    <h5 class="text-uppercase">Make Money With Us</h5>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <a href="#!">Sell on OldEggs.com</a>
+                                        </li>
+                                        <li>
+                                            <a href="#!">Become An Affiliate</a>
+                                        </li>
+                                        <li>
+                                            <a href="#!">Advertise Your Products</a>
+                                        </li>
+                                        <li>
+                                            <a href="#!">Investor Relation</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            <!-- Grid column -->
+                            <div class="col-md-5 mb-md-0 mb-3">
+                                <!-- Links -->
+                                <h5 class="text-uppercase">How Can We Assist You</h5>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <a href="#!">Shipping Rates & Policies</a>
+                                    </li>
+                                    <li>
+                                        <a href="#!">Returns & Replacements</a>
+                                    </li>
+                                    <li>
+                                        <a href="#!">OldEggs Assistant</a>
+                                    </li>
+                                    <li>
+                                        <a href="#!">Contact Us</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                            <div class="footer-copyright text-center py-3">© 2018 Copyright:
+                                <a href="#"> OldEggs.com</a>
+                            </div>
+                </footer>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,26 @@
+<div class='col-12 row grid'>
+    {% for i in item %}
+        <form class = 'col-4 row mt-3' action = '/additem/' method='POST'>
+            {% csrf_token %}
+            <div class='col-12'>
+                <h5 class='col-12 item_name'>
+                    <a href='item/{{i.id}}/'>{{i.manufacturer}} - {{i.model_number}}</a>
+                </h5>
+                <div class='col-12'>
+                    <img src='{{i.picture}}' alt='picture'>
+                </div>
+                <div class='col-12 desc'>
+                    {{i.name}}
+                </div>
+                <div class='col-12 text-center'>
+                    {{i.price}}
+                </div>
+                <input type='hidden' name = 'item_id' value={{i.id}}>
+                <div class='col-12 text-center'>
+                    <button type='submit' class = 'btn button'>Add to Cart</button>
+                </div>
+            </div>
+            
+        </form>
+    {% endfor %}
+</div>
